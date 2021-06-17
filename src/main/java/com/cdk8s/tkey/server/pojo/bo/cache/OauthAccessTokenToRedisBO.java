@@ -21,5 +21,4 @@ public class OauthAccessTokenToRedisBO extends OauthTokenToRedisBO implements Se
 
 	private OauthUserAttribute userAttribute;
 
-
 }

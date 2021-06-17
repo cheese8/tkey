@@ -1,6 +1,9 @@
 package com.cdk8s.tkey.server.strategy;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cdk8s.tkey.server.constant.GlobalVariable;
 import com.cdk8s.tkey.server.exception.OauthApiException;
 import com.cdk8s.tkey.server.pojo.bo.cache.OauthRefreshTokenToRedisBO;
@@ -13,19 +16,15 @@ import com.cdk8s.tkey.server.service.OauthGenerateService;
 import com.cdk8s.tkey.server.service.OauthSaveService;
 import com.cdk8s.tkey.server.util.StringUtil;
 import com.cdk8s.tkey.server.util.redis.StringRedisService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service(GlobalVariable.OAUTH_REFRESH_TOKEN_GRANT_TYPE)
 public class OauthRefreshTokenToTokenStrategy implements OauthTokenStrategyInterface {
 
 	@Autowired
-	private StringRedisService<String, OauthUserInfoToRedisBO> userInfoRedisService;
+	private StringRedisService<OauthUserInfoToRedisBO> userInfoRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthRefreshTokenToRedisBO> refreshTokenRedisService;
+	private StringRedisService<OauthRefreshTokenToRedisBO> refreshTokenRedisService;
 
 	@Autowired
 	private OauthCheckParamService oauthCheckParamService;

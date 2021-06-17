@@ -35,5 +35,4 @@ public enum ResponseErrorEnum {
 	public String getDescription() {
 		return description;
 	}
-
 }

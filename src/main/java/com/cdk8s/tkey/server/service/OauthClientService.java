@@ -1,18 +1,16 @@
 package com.cdk8s.tkey.server.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cdk8s.tkey.server.constant.GlobalVariable;
 import com.cdk8s.tkey.server.exception.OauthApiException;
 import com.cdk8s.tkey.server.pojo.bo.cache.OauthClientToRedisBO;
 import com.cdk8s.tkey.server.util.JsonUtil;
 import com.cdk8s.tkey.server.util.StringUtil;
 import com.cdk8s.tkey.server.util.redis.StringRedisService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 
 @Service
-@Slf4j
 public class OauthClientService {
 
 	/**
@@ -20,9 +18,7 @@ public class OauthClientService {
 	 * 如果后面出现的公共类越来越多我再考虑独立出一个 jar 包出来维护
 	 */
 	@Autowired
-	private StringRedisService<String, String> clientRedisService;
-
-	//=====================================业务处理 start=====================================
+	private StringRedisService<String> clientRedisService;
 
 	public OauthClientToRedisBO findByClientId(String clientId) {
 		String clientIdRedisKey = GlobalVariable.REDIS_CLIENT_ID_KEY_PREFIX + clientId;
@@ -32,11 +28,4 @@ public class OauthClientService {
 		}
 		return JsonUtil.toObject(result, OauthClientToRedisBO.class);
 	}
-
-	//=====================================业务处理  end=====================================
-
-	//=====================================私有方法 start=====================================
-
-	//=====================================私有方法  end=====================================
-
 }

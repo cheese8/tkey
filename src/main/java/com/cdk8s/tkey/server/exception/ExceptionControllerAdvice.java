@@ -22,10 +22,6 @@ public class ExceptionControllerAdvice {
 	private static final String JSON_TYPE = "application/json";
 	private static final String X_TYPE = "XMLHttpRequest";
 
-
-	//=====================================业务处理 start=====================================
-
-
 	/**
 	 * 系统异常
 	 */
@@ -55,7 +51,6 @@ public class ExceptionControllerAdvice {
 		return getResponseObject(e, HttpStatus.BAD_REQUEST, httpServletRequest, message, responseProduceTypeEnum, pagePath);
 	}
 
-
 	/**
 	 * 其他异常
 	 */
@@ -77,11 +72,7 @@ public class ExceptionControllerAdvice {
 
 	}
 
-	//=====================================业务处理  end=====================================
-	//=====================================私有方法 start=====================================
-
 	private Object getResponseObject(Exception e, HttpStatus httpStatus, HttpServletRequest httpServletRequest, String message, ResponseProduceTypeEnum responseProduceTypeEnum, String pagePath) {
-
 		log.error("统一异常信息输出：<{}>", message);
 		if (log.isDebugEnabled()) {
 			log.error(ExceptionUtil.getStackTraceAsString(e));
@@ -124,6 +115,4 @@ public class ExceptionControllerAdvice {
 		modelAndView.setViewName(pagePath);
 		return modelAndView;
 	}
-
-	//=====================================私有方法  end=====================================
 }

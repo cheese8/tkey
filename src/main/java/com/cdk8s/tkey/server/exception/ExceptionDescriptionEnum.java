@@ -38,5 +38,4 @@ public enum ExceptionDescriptionEnum {
 		this.keyWord = keyWord;
 		this.description = description;
 	}
-
 }

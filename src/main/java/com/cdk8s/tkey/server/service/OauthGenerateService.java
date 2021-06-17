@@ -1,18 +1,16 @@
 package com.cdk8s.tkey.server.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cdk8s.tkey.server.constant.GlobalVariable;
 import com.cdk8s.tkey.server.pojo.dto.OauthToken;
 import com.cdk8s.tkey.server.properties.OauthProperties;
 import com.cdk8s.tkey.server.util.NumericGeneratorUtil;
 import com.cdk8s.tkey.server.util.RandomUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 
 @Service
-@Slf4j
 public class OauthGenerateService {
 
 	@Autowired

@@ -1,8 +1,8 @@
 package com.cdk8s.tkey.server.controller;
 
-import com.cdk8s.tkey.server.constant.GlobalVariableToJunit;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,13 +19,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import com.cdk8s.tkey.server.constant.GlobalVariableToJunit;
+
+import lombok.SneakyThrows;
 
 /**
  * 把 GlobalVariableToJunit.CLIENT_SECRET 和 GlobalVariableToJunit.CLIENT_SECRET 使用 Form 参数方式提交
  */
-@Slf4j
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

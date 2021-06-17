@@ -22,7 +22,7 @@ spring:
     database: ${SPRING_REDIS_DATABASE:0}
     port: ${SPRING_REDIS_PORT:6379}
     host: ${SPRING_REDIS_HOST:redis.cdk8s.com}
-    password: ${SPRING_REDIS_PASSWORD:123456}
+    password: ${SPRING_REDIS_PASSWORD:}
     timeout: 10000ms
     lettuce:
       pool:

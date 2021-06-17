@@ -3,8 +3,6 @@ package com.cdk8s.tkey.server.constant;
 
 public interface GlobalVariableToJunit {
 
-
-	//=====================================biz start=====================================
 	String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36";
 	String IP = "127.0.0.1";
 
@@ -26,8 +24,5 @@ public interface GlobalVariableToJunit {
 	String CLIENT_ID = "test_client_id_1";
 	String CLIENT_SECRET = "test_client_secret_1";
 	String HTTP_HEADER_BASIC_AUTHORIZATION = "Basic dGVzdF9jbGllbnRfaWRfMTp0ZXN0X2NsaWVudF9zZWNyZXRfMQ==";
-
-	//=====================================biz end=====================================
-
 
 }

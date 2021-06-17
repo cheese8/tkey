@@ -1,16 +1,37 @@
 package com.cdk8s.tkey.server.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cdk8s.tkey.server.constant.GlobalVariable;
 import com.cdk8s.tkey.server.enums.ResponseProduceTypeEnum;
 import com.cdk8s.tkey.server.exception.OauthApiException;
-import com.cdk8s.tkey.server.pojo.bo.cache.*;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthAccessTokenToRedisBO;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthClientToRedisBO;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthRefreshTokenToRedisBO;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthTgcToRedisBO;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthUserInfoToRedisBO;
 import com.cdk8s.tkey.server.pojo.bo.handle.OauthTokenStrategyHandleBO;
 import com.cdk8s.tkey.server.pojo.dto.OauthIntrospect;
 import com.cdk8s.tkey.server.pojo.dto.OauthToken;
 import com.cdk8s.tkey.server.pojo.dto.OauthUserAttribute;
 import com.cdk8s.tkey.server.pojo.dto.OauthUserProfile;
-import com.cdk8s.tkey.server.pojo.dto.param.*;
+import com.cdk8s.tkey.server.pojo.dto.param.OauthAuthorizeParam;
+import com.cdk8s.tkey.server.pojo.dto.param.OauthClientParam;
+import com.cdk8s.tkey.server.pojo.dto.param.OauthFormLoginParam;
+import com.cdk8s.tkey.server.pojo.dto.param.OauthIntrospectTokenParam;
+import com.cdk8s.tkey.server.pojo.dto.param.OauthTokenParam;
 import com.cdk8s.tkey.server.properties.OauthProperties;
 import com.cdk8s.tkey.server.retry.RetryService;
 import com.cdk8s.tkey.server.service.OauthCheckParamService;
@@ -22,20 +43,8 @@ import com.cdk8s.tkey.server.util.CookieUtil;
 import com.cdk8s.tkey.server.util.IPUtil;
 import com.cdk8s.tkey.server.util.StringUtil;
 import com.cdk8s.tkey.server.util.redis.StringRedisService;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-
 
 @Slf4j
 @Controller
@@ -43,16 +52,16 @@ import java.util.List;
 public class OauthController {
 
 	@Autowired
-	private StringRedisService<String, OauthTgcToRedisBO> tgcRedisService;
+	private StringRedisService<OauthTgcToRedisBO> tgcRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthUserInfoToRedisBO> userInfoRedisService;
+	private StringRedisService<OauthUserInfoToRedisBO> userInfoRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthAccessTokenToRedisBO> accessTokenRedisService;
+	private StringRedisService<OauthAccessTokenToRedisBO> accessTokenRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthRefreshTokenToRedisBO> refreshTokenRedisService;
+	private StringRedisService<OauthRefreshTokenToRedisBO> refreshTokenRedisService;
 
 	@Autowired
 	private OauthCheckParamService oauthCheckParamService;
@@ -72,11 +81,7 @@ public class OauthController {
 	@Autowired
 	private OauthProperties oauthProperties;
 
-	//=====================================业务处理 start=====================================
-
-	/**
-	 * 登录页面入口
-	 */
+	// 登录页面入口
 	@RequestMapping(value = "/authorize", method = RequestMethod.GET)
 	public String authorize(final HttpServletRequest request, ModelMap model, OauthAuthorizeParam oAuthAuthorizeParam) {
 
@@ -112,9 +117,7 @@ public class OauthController {
 		return GlobalVariable.REDIRECT_URI_PREFIX + finalRedirectUrl;
 	}
 
-	/**
-	 * 表单登录接口：验证用户名和密码
-	 */
+	// 表单登录接口：验证用户名和密码
 	@RequestMapping(value = "/authorize", method = RequestMethod.POST)
 	public String formLogin(final HttpServletRequest request, final HttpServletResponse response, ModelMap model, OauthFormLoginParam oauthFormLoginParam) {
 
@@ -170,10 +173,7 @@ public class OauthController {
 
 	}
 
-
-	/**
-	 * 换取 token（授权码模式、客户端模式、密码模式、刷新模式）
-	 */
+	// 换取 token（授权码模式、客户端模式、密码模式、刷新模式）
 	@RequestMapping(value = "/token", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public ResponseEntity<?> token(final HttpServletRequest request, OauthTokenParam oauthTokenParam) {
@@ -188,10 +188,7 @@ public class OauthController {
 		return ResponseEntity.ok(oauthToken);
 	}
 
-
-	/**
-	 * 根据 AccessToken 获取用户信息
-	 */
+	// 根据 AccessToken 获取用户信息
 	@RequestMapping(value = "/userinfo", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public ResponseEntity<?> userinfo(final HttpServletRequest request) {
@@ -203,10 +200,7 @@ public class OauthController {
 		return ResponseEntity.ok(oauthUserProfile);
 	}
 
-
-	/**
-	 * 验证 AccessToken / RefreshToken 有效性和基础信息
-	 */
+	// 验证 AccessToken / RefreshToken 有效性和基础信息
 	@RequestMapping(value = "/introspect", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> introspect(final HttpServletRequest request, OauthIntrospectTokenParam oauthIntrospectTokenParam) {
@@ -245,9 +239,7 @@ public class OauthController {
 		return ResponseEntity.ok(oauthIntrospect);
 	}
 
-	/**
-	 * 登出
-	 */
+	// 登出
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(final HttpServletRequest request, final HttpServletResponse response, @RequestParam(value = "redirect_uri", required = false) String redirectUri) {
 
@@ -264,11 +256,6 @@ public class OauthController {
 		return GlobalVariable.DEFAULT_LOGOUT_PAGE_PATH;
 
 	}
-
-	//=====================================业务处理  end=====================================
-
-	//=====================================私有方法 start=====================================
-
 
 	private OauthUserAttribute requestLoginApi(OauthFormLoginParam oauthFormLoginParam) {
 		// 为了防止 UPMS 接口抖动，这里做了 retry 机制
@@ -363,6 +350,4 @@ public class OauthController {
 		oauthClientParam.setClientSecret(stringList.get(1));
 
 	}
-	//=====================================私有方法  end=====================================
-
 }

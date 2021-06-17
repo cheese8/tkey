@@ -17,7 +17,7 @@ public class MeterConfig implements MeterRegistryCustomizer {
 	@Value("${spring.application.name}")
 	private String applicationName;
 
-	@Value("${spring.datasource.hikari.pool-name:/myHikariPoolName}")
+	@Value("${spring.datasource.hikari.pool-name:/hikariPoolName}")
 	private String hikariPoolName;
 
 	@Override

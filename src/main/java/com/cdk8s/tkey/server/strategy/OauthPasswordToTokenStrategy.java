@@ -1,6 +1,9 @@
 package com.cdk8s.tkey.server.strategy;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cdk8s.tkey.server.constant.GlobalVariable;
 import com.cdk8s.tkey.server.exception.OauthApiException;
 import com.cdk8s.tkey.server.pojo.bo.handle.OauthTokenStrategyHandleBO;
@@ -12,11 +15,7 @@ import com.cdk8s.tkey.server.service.OauthCheckParamService;
 import com.cdk8s.tkey.server.service.OauthGenerateService;
 import com.cdk8s.tkey.server.service.OauthSaveService;
 import com.cdk8s.tkey.server.util.StringUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service(GlobalVariable.OAUTH_PASSWORD_GRANT_TYPE)
 public class OauthPasswordToTokenStrategy implements OauthTokenStrategyInterface {
 

@@ -24,5 +24,4 @@ public class AsyncConfig {
 		executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
 		return executor;
 	}
-
 }

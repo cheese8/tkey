@@ -21,16 +21,11 @@ public class ApplicationHealthInitRunner implements ApplicationRunner {
 	@Autowired
 	private ReactiveHealthIndicator redisReactiveHealthIndicator;
 
-	//=====================================业务处理 start=====================================
-
 	@Override
 	public void run(ApplicationArguments args) {
 		http();
 		redis();
 	}
-
-	//=====================================业务处理  end=====================================
-	//=====================================私有方法 start=====================================
 
 	private void http() {
 		Health customUPMSHealth = customUPMSApiServerHealthEndpoint.health();
@@ -47,7 +42,4 @@ public class ApplicationHealthInitRunner implements ApplicationRunner {
 			}
 		});
 	}
-
-	//=====================================私有方法  end=====================================
-
 }

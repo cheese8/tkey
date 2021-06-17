@@ -1,16 +1,15 @@
 package com.cdk8s.tkey.server.util;
 
 
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 
-@Slf4j
+import lombok.SneakyThrows;
+
 public final class CookieUtil {
 
 	public static void setCookie(final HttpServletResponse response, String name, String value, int maxAge, boolean httpOnly, boolean secure) {

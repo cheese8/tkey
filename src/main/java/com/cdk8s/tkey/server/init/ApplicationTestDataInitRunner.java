@@ -1,5 +1,11 @@
 package com.cdk8s.tkey.server.init;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
 import com.cdk8s.tkey.server.constant.GlobalVariable;
 import com.cdk8s.tkey.server.constant.GlobalVariableToJunit;
 import com.cdk8s.tkey.server.pojo.bo.cache.OauthAccessTokenToRedisBO;
@@ -10,14 +16,9 @@ import com.cdk8s.tkey.server.pojo.dto.OauthUserAttribute;
 import com.cdk8s.tkey.server.properties.OauthProperties;
 import com.cdk8s.tkey.server.util.JsonUtil;
 import com.cdk8s.tkey.server.util.redis.StringRedisService;
+
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
-
 
 @Slf4j
 @Profile({"dev", "gatling", "test", "junit"})
@@ -25,21 +26,19 @@ import org.springframework.stereotype.Component;
 public class ApplicationTestDataInitRunner implements ApplicationRunner {
 
 	@Autowired
-	private StringRedisService<String, String> clientRedisService;
+	private StringRedisService<String> clientRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthCodeToRedisBO> codeRedisService;
+	private StringRedisService<OauthCodeToRedisBO> codeRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthAccessTokenToRedisBO> accessTokenRedisService;
+	private StringRedisService<OauthAccessTokenToRedisBO> accessTokenRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthRefreshTokenToRedisBO> refreshTokenRedisService;
+	private StringRedisService<OauthRefreshTokenToRedisBO> refreshTokenRedisService;
 
 	@Autowired
 	private OauthProperties oauthProperties;
-
-	//=====================================业务处理 start=====================================
 
 	@SneakyThrows
 	@Override
@@ -57,9 +56,6 @@ public class ApplicationTestDataInitRunner implements ApplicationRunner {
 		log.info("=================================预设 Redis 测试数据 End=================================");
 
 	}
-
-	//=====================================业务处理  end=====================================
-	//=====================================私有方法 start=====================================
 
 	private OauthClientToRedisBO getClient() {
 		OauthClientToRedisBO oauthClientToRedisBO = new OauthClientToRedisBO();
@@ -105,6 +101,4 @@ public class ApplicationTestDataInitRunner implements ApplicationRunner {
 		oauthCodeToRedisBO.setIat(1561522123L);
 		return oauthCodeToRedisBO;
 	}
-
-	//=====================================私有方法  end=====================================
 }

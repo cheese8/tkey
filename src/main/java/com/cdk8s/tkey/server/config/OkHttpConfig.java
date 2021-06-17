@@ -68,5 +68,4 @@ public class OkHttpConfig {
 				.writeTimeout(30, TimeUnit.SECONDS)
 				.build();
 	}
-
 }

@@ -1,5 +1,13 @@
 package com.cdk8s.tkey.server.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cdk8s.tkey.server.constant.GlobalVariable;
 import com.cdk8s.tkey.server.enums.ResponseProduceTypeEnum;
 import com.cdk8s.tkey.server.exception.OauthApiException;
@@ -13,32 +21,20 @@ import com.cdk8s.tkey.server.pojo.dto.param.OauthIntrospectTokenParam;
 import com.cdk8s.tkey.server.pojo.dto.param.OauthTokenParam;
 import com.cdk8s.tkey.server.util.StringUtil;
 import com.cdk8s.tkey.server.util.redis.StringRedisService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
-
 
 @Service
-@Slf4j
 public class OauthCheckParamService {
 
 	@Autowired
 	private OauthClientService oauthClientService;
 
 	@Autowired
-	private StringRedisService<String, OauthTgcToRedisBO> tgcRedisService;
+	private StringRedisService<OauthTgcToRedisBO> tgcRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthAccessTokenToRedisBO> accessTokenRedisService;
-
-	//=====================================业务处理 start=====================================
+	private StringRedisService<OauthAccessTokenToRedisBO> accessTokenRedisService;
 
 	public String checkCookieTgc(String userAgent, String requestIp, String tgcCookieValue) {
-
 		try {
 			checkUserAgentAndRequestIpParam(userAgent, requestIp);
 		} catch (Exception e) {
@@ -302,10 +298,6 @@ public class OauthCheckParamService {
 		return oauthIntrospect;
 	}
 
-	//=====================================业务处理  end=====================================
-
-	//=====================================私有方法 start=====================================
-
 	private OauthClientToRedisBO checkClientIdAndRedirectUriParam(String clientId, String redirectUri) {
 
 		OauthClientToRedisBO checkClientIdObject = checkClientIdParam(clientId);
@@ -321,7 +313,4 @@ public class OauthCheckParamService {
 
 		return checkClientIdObject;
 	}
-
-	//=====================================私有方法  end=====================================
-
 }

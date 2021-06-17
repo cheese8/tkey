@@ -1,39 +1,41 @@
 package com.cdk8s.tkey.server.service;
 
 
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
 import com.cdk8s.tkey.server.constant.GlobalVariable;
-import com.cdk8s.tkey.server.pojo.bo.cache.*;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthAccessTokenToRedisBO;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthCodeToRedisBO;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthRefreshTokenToRedisBO;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthTgcToRedisBO;
+import com.cdk8s.tkey.server.pojo.bo.cache.OauthUserInfoToRedisBO;
 import com.cdk8s.tkey.server.pojo.dto.OauthUserAttribute;
 import com.cdk8s.tkey.server.properties.OauthProperties;
 import com.cdk8s.tkey.server.util.DatetimeUtil;
 import com.cdk8s.tkey.server.util.UserAgentUtil;
 import com.cdk8s.tkey.server.util.redis.StringRedisService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-
-import java.util.concurrent.TimeUnit;
-
 
 @Service
-@Slf4j
 public class OauthSaveService {
 
 	@Autowired
-	private StringRedisService<String, OauthCodeToRedisBO> codeRedisService;
+	private StringRedisService<OauthCodeToRedisBO> codeRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthTgcToRedisBO> tgcRedisService;
+	private StringRedisService<OauthTgcToRedisBO> tgcRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthUserInfoToRedisBO> userInfoRedisService;
+	private StringRedisService<OauthUserInfoToRedisBO> userInfoRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthAccessTokenToRedisBO> accessTokenRedisService;
+	private StringRedisService<OauthAccessTokenToRedisBO> accessTokenRedisService;
 
 	@Autowired
-	private StringRedisService<String, OauthRefreshTokenToRedisBO> refreshTokenRedisService;
+	private StringRedisService<OauthRefreshTokenToRedisBO> refreshTokenRedisService;
 
 	@Autowired
 	private OauthGenerateService oauthGenerateService;

@@ -19,8 +19,6 @@ public class LoggingTraceRepository implements HttpTraceRepository {
 
 	private final HttpTraceRepository httpTraceRepository = new InMemoryHttpTraceRepository();
 
-	//=====================================业务处理 start=====================================
-
 	@Override
 	public List<HttpTrace> findAll() {
 		return httpTraceRepository.findAll();
@@ -34,9 +32,6 @@ public class LoggingTraceRepository implements HttpTraceRepository {
 		printTimeTakenResult(trace);
 		this.httpTraceRepository.add(trace);
 	}
-
-	//=====================================业务处理  end=====================================
-	//=====================================私有方法 start=====================================
 
 	private Boolean checkUri(HttpTrace trace) {
 		HttpTrace.Request request = trace.getRequest();
@@ -79,7 +74,6 @@ public class LoggingTraceRepository implements HttpTraceRepository {
 		Map<String, List<String>> responseHeaders = response.getHeaders();
 		int responseStatus = response.getStatus();
 
-
 		if (log.isDebugEnabled()) {
 			log.debug("----------------------HttpTrace requestUri={}", requestUri);
 			log.debug("----------------------HttpTrace requestMethod={}, responseStatus={}", requestMethod, responseStatus);
@@ -99,8 +93,4 @@ public class LoggingTraceRepository implements HttpTraceRepository {
 			log.info("----------------------HttpTrace 提示：检查该方法是否有优化的空间={}----------------------", timeTaken);
 		}
 	}
-
-	//=====================================私有方法  end=====================================
-
-
 }
