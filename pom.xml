@@ -33,11 +33,10 @@
         <okhttp.version>3.12.1</okhttp.version>
         <hutool-all.version>4.5.13</hutool-all.version>
 
+        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
     </properties>
 
-
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -147,7 +146,6 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool-all.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -161,7 +159,7 @@
 
     <repositories>
         <repository>
-            <id>aliyun-pom-repos</id>
+            <id>aliyun-repos</id>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
             <snapshots>
                 <enabled>false</enabled>
@@ -171,7 +169,7 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>aliyun-pom-plugin</id>
+            <id>aliyun-plugin</id>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
             <snapshots>
                 <enabled>false</enabled>

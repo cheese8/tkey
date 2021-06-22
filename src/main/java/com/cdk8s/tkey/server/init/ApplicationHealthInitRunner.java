@@ -1,7 +1,5 @@
 package com.cdk8s.tkey.server.init;
 
-import com.cdk8s.tkey.server.actuator.CustomUPMSApiServerHealthEndpoint;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -9,6 +7,10 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.ReactiveHealthIndicator;
 import org.springframework.boot.actuate.health.Status;
 import org.springframework.stereotype.Component;
+
+import com.cdk8s.tkey.server.actuator.CustomUpmsServerHealthEndpoint;
+
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -16,20 +18,24 @@ import reactor.core.publisher.Mono;
 public class ApplicationHealthInitRunner implements ApplicationRunner {
 
 	@Autowired
-	private CustomUPMSApiServerHealthEndpoint customUPMSApiServerHealthEndpoint;
+	private CustomUpmsServerHealthEndpoint customUpmsServerHealthEndpoint;
 
 	@Autowired
 	private ReactiveHealthIndicator redisReactiveHealthIndicator;
+	
+	private boolean checkHealthOnStartup = false;
 
 	@Override
 	public void run(ApplicationArguments args) {
-		http();
-		redis();
+	    if (checkHealthOnStartup) {
+	        http();
+	        redis(); 
+	    }
 	}
 
 	private void http() {
-		Health customUPMSHealth = customUPMSApiServerHealthEndpoint.health();
-		if (customUPMSHealth.getStatus().equals(Status.DOWN)) {
+		Health customUpmsHealth = customUpmsServerHealthEndpoint.health();
+		if (customUpmsHealth.getStatus().equals(Status.DOWN)) {
 			log.error("启动请求 UPMS 接口失败");
 		}
 	}

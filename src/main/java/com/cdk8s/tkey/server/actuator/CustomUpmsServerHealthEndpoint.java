@@ -11,7 +11,7 @@ import com.cdk8s.tkey.server.util.okhttp.OkHttpService;
 
 // 模拟检测第三方验证用户名密码接口
 @Component
-public class CustomUPMSApiServerHealthEndpoint extends AbstractHealthIndicator {
+public class CustomUpmsServerHealthEndpoint extends AbstractHealthIndicator {
 
     @Autowired
     private OkHttpService okHttpService;
@@ -19,10 +19,10 @@ public class CustomUPMSApiServerHealthEndpoint extends AbstractHealthIndicator {
     @Override
     protected void doHealthCheck(Health.Builder builder) {
         OkHttpResponse okHttpResponse = okHttpService.get("https://www.baidu.com");
-        if (okHttpResponse.getStatus() == HttpStatus.OK.value()) {
-            builder.up();
-        } else {
+        if (okHttpResponse == null || okHttpResponse.getStatus() != HttpStatus.OK.value()) {
             builder.down();
+        }else {
+            builder.up();
         }
     }
 }

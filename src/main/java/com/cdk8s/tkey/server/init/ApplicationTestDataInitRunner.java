@@ -54,7 +54,6 @@ public class ApplicationTestDataInitRunner implements ApplicationRunner {
 		codeRedisService.set(GlobalVariable.REDIS_OAUTH_CODE_PREFIX_KEY_PREFIX + GlobalVariableToJunit.CODE2, getCode(), oauthProperties.getCodeMaxTimeToLiveInSeconds());
 
 		log.info("=================================预设 Redis 测试数据 End=================================");
-
 	}
 
 	private OauthClientToRedisBO getClient() {
@@ -90,7 +89,6 @@ public class ApplicationTestDataInitRunner implements ApplicationRunner {
 		oauthRefreshTokenToRedisBO.setClientId(GlobalVariableToJunit.CLIENT_ID);
 		oauthRefreshTokenToRedisBO.setIat(1561522123L);
 		return oauthRefreshTokenToRedisBO;
-
 	}
 
 	private OauthCodeToRedisBO getCode() {

@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Slf4j
 @Component
-public class MeterConfig implements MeterRegistryCustomizer {
+public class MeterConfig implements MeterRegistryCustomizer<MeterRegistry> {
 
 	@Value("${spring.application.name}")
 	private String applicationName;

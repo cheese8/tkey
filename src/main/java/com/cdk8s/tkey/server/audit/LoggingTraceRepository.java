@@ -69,28 +69,27 @@ public class LoggingTraceRepository implements HttpTraceRepository {
 		List<String> refererList = requestHeaders.get("referer");
 		URI requestUri = request.getUri();
 
-
 		HttpTrace.Response response = trace.getResponse();
 		Map<String, List<String>> responseHeaders = response.getHeaders();
 		int responseStatus = response.getStatus();
 
 		if (log.isDebugEnabled()) {
-			log.debug("----------------------HttpTrace requestUri={}", requestUri);
-			log.debug("----------------------HttpTrace requestMethod={}, responseStatus={}", requestMethod, responseStatus);
-			log.debug("----------------------HttpTrace cookieList={}", cookieList);
-			log.debug("----------------------HttpTrace refererList={}", refererList);
-			log.debug("----------------------HttpTrace responseHeaders={}", responseHeaders.toString());
+			log.debug("HttpTrace requestUri={}", requestUri);
+			log.debug("HttpTrace requestMethod={}, responseStatus={}", requestMethod, responseStatus);
+			log.debug("HttpTrace cookieList={}", cookieList);
+			log.debug("HttpTrace refererList={}", refererList);
+			log.debug("HttpTrace responseHeaders={}", responseHeaders.toString());
 		}
 
 		if (timeTaken > GlobalVariable.NEED_OPTIMIZE_TIME_THRESHOLD) {
-			log.info("----------------------HttpTrace requestUri={}----------------------", requestUri);
+			log.info("HttpTrace requestUri={}", requestUri);
 		}
 		if (timeTaken > GlobalVariable.SERIOUS_PERFORMANCE_PROBLEMS_TIME_THRESHOLD) {
-			log.error("----------------------HttpTrace 严重注意：该方法可能存在严重性能问题={}----------------------", timeTaken);
+			log.error("HttpTrace 严重注意：该方法可能存在严重性能问题={}", timeTaken);
 		} else if (timeTaken > GlobalVariable.GENERAL_PERFORMANCE_PROBLEMS_TIME_THRESHOLD) {
-			log.warn("----------------------HttpTrace 注意：该方法可能存在一般性能问题={}----------------------", timeTaken);
+			log.warn("HttpTrace 注意：该方法可能存在一般性能问题={}", timeTaken);
 		} else if (timeTaken > GlobalVariable.NEED_OPTIMIZE_TIME_THRESHOLD) {
-			log.info("----------------------HttpTrace 提示：检查该方法是否有优化的空间={}----------------------", timeTaken);
+			log.info("HttpTrace 提示：检查该方法是否有优化的空间={}", timeTaken);
 		}
 	}
 }
